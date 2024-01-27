@@ -18,10 +18,52 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         // This delegate does not imply the connecting scene or session are new (see `application:configurationForConnectingSceneSession` instead).
         guard let windowScene = (scene as? UIWindowScene) else { return }
 
+        let tabBar = UITabBarController()
+        tabBar.tabBar.backgroundColor = .white
+        tabBar.tabBar.tintColor = AppColor.mainGreen.uiColor
+        
+        let dashboard     = DashboardViewController()
+        dashboard.tabBarItem = .init(
+            title: "Главная",
+            image: UIImage(systemName: "house.fill"),
+            tag: 1
+        )
+        let myPolicies    = MyPoliciesViewController()
+        myPolicies.tabBarItem = .init(
+            title: "Мои полисы",
+            image: UIImage(systemName: "book.pages.fill"),
+            tag: 2
+        )
+        let insuranceCase = InsuranceCaseViewController()
+        insuranceCase.tabBarItem = .init(
+            title: "Страховой случаи",
+            image: UIImage(systemName: "person.text.rectangle"),
+            tag: 3
+        )
+        let profile       = ProfileViewController()
+        profile.tabBarItem = .init(
+            title: "Профиль",
+            image: UIImage(systemName: "person.fill"),
+            tag: 4
+        )
+        
+        let controllersArray = [
+            dashboard,
+            myPolicies,
+            insuranceCase,
+            profile
+        ]
+        
+        tabBar.viewControllers = controllersArray.map { UINavigationController.init(
+            rootViewController: $0
+        )}
+        
         let window = UIWindow(windowScene: windowScene)
         window.rootViewController = UINavigationController(
-            rootViewController: ViewController()
-        ) 
+            rootViewController: tabBar
+        )
+        
+        
         self.window = window
         window.makeKeyAndVisible()
     }
