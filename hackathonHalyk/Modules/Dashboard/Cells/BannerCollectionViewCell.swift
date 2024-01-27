@@ -36,4 +36,5 @@ class BannerCollectionViewCell: UICollectionViewCell {
     func configure(image: UIImage) {
         imageView.image = image
     }
+    
 }

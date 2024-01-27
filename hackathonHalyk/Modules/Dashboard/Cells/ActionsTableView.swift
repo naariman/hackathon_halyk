@@ -16,7 +16,8 @@ struct ActionViewModel {
 
 class ActionsTableView: UIView, UICollectionViewDataSource, UICollectionViewDelegate {
     
-    
+    var buttonHandler: (() -> ())?
+    var alertButtonHandler: (() -> ())?
     
     let elements: [ActionViewModel] = [
         .init(image: UIImage(named: "action2") ?? UIImage(), text: "Завявки"),
@@ -94,11 +95,15 @@ class ActionsTableView: UIView, UICollectionViewDataSource, UICollectionViewDele
     ) {
         
         if indexPath.row == 1 {
-            print("ФИЧА")
-        } else {
+            let vc = WebViewViewController()
+            if let navigationController = self.window?.rootViewController as? UINavigationController {
+                navigationController.pushViewController(vc, animated: true)
+                
+            } else {
+                alertButtonHandler?()
+            }
             
         }
-        
     }
 }
 

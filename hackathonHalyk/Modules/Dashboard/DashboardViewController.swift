@@ -7,18 +7,18 @@
 
 import UIKit
 
-
 final class DashboardViewController: UIViewController {
     
     private let profileView: ProfileView = .init(frame: .zero)
     private let bannersCollectionView: BannersTableView = .init(frame: .zero)
     private let actionView: ActionsTableView = .init(frame: .zero)
-    private let emptyLabel: UILabel = {
+    
+    private let label: UILabel = {
        let label = UILabel()
-        label.font = .systemFont(ofSize: 32, weight: .semibold)
-        label.text = "Comming soon..."
-        label.textColor = .gray
+        label.textColor = .lightGray
+        label.text = "Developing process..."
         label.textAlignment = .center
+        label.font = .systemFont(ofSize: 32, weight: .semibold)
         return label
     }()
     
@@ -55,18 +55,34 @@ private extension DashboardViewController {
             make.leading.trailing.equalToSuperview().inset(16)
         }
        
-        view.addSubview(emptyLabel)
-        emptyLabel.snp.makeConstraints { make in
-            make.top.equalTo(actionView.snp.bottom).offset(100)
-            make.leading.trailing.equalToSuperview().inset(16)
+        view.addSubview(label)
+        label.snp.makeConstraints { make in
+            make.top.equalTo(actionView.snp.bottom).offset(32)
+            make.height.equalTo(200)
+            make.leading.trailing.equalToSuperview()
+            make.bottom.equalToSuperview().offset(-100)
+            make.centerX.equalToSuperview()
         }
         
     }
     
-}
+    @objc
+    func opentg() {
+        let botURL = URL.init(string: "https://t.me/\("BotFather")")
 
-extension DashboardViewController
-                                   
-{
-  
+            if UIApplication.shared.canOpenURL(botURL!) {
+                UIApplication.shared.openURL(botURL!)
+            } else {
+                let urlAppStore = URL(string: "itms-apps://itunes.apple.com/app/id686449807")
+                if(UIApplication.shared.canOpenURL(urlAppStore!))
+                {
+                    if #available(iOS 10.0, *) {
+                        UIApplication.shared.open(urlAppStore!, options: [:], completionHandler: nil)
+                    } else {
+                        UIApplication.shared.openURL(urlAppStore!)
+                    }
+                }
+            }
+    }
+    
 }
